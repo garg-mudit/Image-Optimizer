@@ -6,6 +6,7 @@ const imagemin = require('imagemin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
 const slash = require('slash');
+const log = require('electron-log');
 
 const { isDev, isMac } = require('./app/envVariables');
 const { Events } = require('./app/events');
@@ -108,12 +109,12 @@ const shrinkImage = async ({ imgPath, quality, dest }) => {
         }),
       ],
     });
-    console.log(files);
+    log.info(files);
     shell.openPath(dest);
 
     mainWindow.webContents.send(Events.imageDone);
   } catch (err) {
-    console.log(err);
+    log.error(err);
   }
 };
 
